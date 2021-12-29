@@ -34,8 +34,8 @@ jobs:
       - name: Build app
         uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: build # will run `yarn build` command
+          cmd: sudo build # will run `yarn build` command
       - name: Install Surge
-        run: npm install -g surge
+        run: sudo npm install -g surge
       - name: Run surge
-        run: surge ./build bootcamp2020-class2-bizztechs.surge.sh --token ${{secrets.SURGE_TOKEN}}
+        run: sudo surge ./build bootcamp2020-class2-bizztechs.surge.sh --token ${{secrets.SURGE_TOKEN}}
