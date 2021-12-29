@@ -34,7 +34,7 @@ jobs:
       - name: Build app
         uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: sudo build # will run `yarn build` command
+          cmd: build # will run `yarn build` command
       - name: Install Surge
         run: sudo npm install -g surge
       - name: Run surge
