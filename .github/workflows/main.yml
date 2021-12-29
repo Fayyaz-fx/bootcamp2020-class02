@@ -24,7 +24,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14 #version changed from 12 to 14
-      
+      - name: install dependencies
+        run: npm install
       - name: Prepare for Yarn Installation
         uses: borales/actions-yarn@v2.3.0
         with:
