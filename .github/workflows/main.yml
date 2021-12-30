@@ -1,33 +1,41 @@
-name: Deployment to surge suing Github actions
+# This is a basic workflow to help you get started with Actions
 
+name: Bootcamp2020 Class-01 deployment
+
+# Controls when the workflow will run
 on:
-  push:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push: #Missing piece of code line
     branches: [ main ]
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  Build:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    name: Deployment to surge  
+    name: Deploying to surge
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      # Install node version 12
-      - uses: actions/setup-node@v2-beta
-        with:
-          node-version: '14'
-
-      # Install npm packages
-      - name: Install packages
-        run: npm install
-
-      # Build react app
-      - name: Build the app
-        run: npm run build
-
-      # Install Surge 
+      # will install node version - 14 using actions
+      - name: Install Node.js
+        uses: actions/setup-node@v2-beta
+        with: 
+          node-version: 14
+          #Download and install yarn package manager
+      - name: Prepare for Yarn Installation
+        run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+      - name: install yarn
+        run: sudo apt update && sudo apt install yarn
+      - name: Build React App
+        run: yarn build
+          
+      # Will install Surge on runner, using run command
       - name: Install Surge
         run: npm install -g surge
-
-      # Deploy to the defined URL using the token
-      - name: Deploy to surge
-        run: surge ./build bootcamp2020-class2-bizztechs.surge.sh --token ${{secrets.SURGE_TOKEN}}
+        
+      # Will run surge and deploy the application with provided name and surge token on runner
+      - name: Run surge
+        run: surge ./build bootcamp2020-class2-bizztechs.surge.sh --token ${{secrets.SRUGE_TOKEN}}
